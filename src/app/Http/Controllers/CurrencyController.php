@@ -2,24 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CurrencyConversionRequest;
+use App\Http\Requests\CurrencyExchangeRequest;
 use App\Objects\Money;
+use App\Services\CurrencyService;
 use Illuminate\Routing\Controller as BaseController;
 
 class CurrencyController extends BaseController
 {
-    public function exchange(CurrencyConversionRequest $request)
+    private $currencyService;
+    public function __construct(CurrencyService $currencyService)
+    {
+        $this->currencyService = $currencyService;
+    }
+
+    public function exchange(CurrencyExchangeRequest $request)
     {
         $source = $request->input("source");
         $target = $request->input("target");
         $formattedAmount = $request->input("amount");
 
         $money = Money::createFromFormat( $formattedAmount, $source);
-        $money->exchange($target);
+        $exchangedMoney = $this->currencyService->exchange($money, $target);
 
         return response()->json([
             "msg" => "success",
-            "amount" => $money->toFormat()
+            "amount" => $exchangedMoney->toFormat()
         ]);
     }
 }
