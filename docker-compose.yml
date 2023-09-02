@@ -32,14 +32,5 @@ services:
       - ./src:/var/www/html
     working_dir: /var/www/html
     entrypoint: ["php", "/var/www/html/artisan"]
-  phpunit:
-    build:
-      context: .
-      dockerfile: php.dockerfile
-    volumes:
-      - ./src:/var/www/html
-    working_dir: /var/www/html
-    entrypoint: ["php", "vendor/bin/phpunit"]
-
       
     
