@@ -9,7 +9,7 @@ class MoneyTest extends TestCase
 {
     public function test_money_can_be_created_from_construct(): void
     {
-        $money = Money::createFromFormat(1525, "USD");
+        $money = new Money(1525, "USD");
 
         $this->assertEquals("USD", $money->getCurrency());
         $this->assertEquals("1525", $money->getAmount());
