@@ -21,7 +21,7 @@ class CurrencyController extends BaseController
         $target = $request->input("target");
         $formattedAmount = $request->input("amount");
 
-        $money = Money::createFromFormat( $formattedAmount, $source);
+        $money = Money::createFromFormat($formattedAmount, $source);
         $exchangedMoney = $this->currencyService->exchange($money, $target);
 
         return response()->json([
